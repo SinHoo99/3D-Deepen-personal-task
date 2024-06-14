@@ -2,17 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerGroundState : MonoBehaviour
+public class PlayerGroundState : PlayerBaseState
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public PlayerGroundState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Enter()
     {
-        
+        base.Enter();
+        StartAnimation(stateMachine.Player.AnimationData.GroundParameterHash);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        StopAnimation(stateMachine.Player.AnimationData.GroundParameterHash);
+    }
+    public override void Update()
+    {
+        base.Update();
+        if (stateMachine.IsAttacking)
+        {
+            return;
+        }
+    }
+    public override void PhysicUpdate()
+    {
+        base.PhysicUpdate();
     }
 }

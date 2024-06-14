@@ -4,15 +4,44 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [field: SerializeField] public PlayerSO Data { get; private set; }
+
+    [field: Header("Animations")]
+    [field: SerializeField] public AnimationData AnimationData { get; private set; }
+    public Animator Animator { get; private set; }
+    public CharacterController Controller { get; private set; }
+    private PlayerStateMachine stateMachine;
+    public Health health { get; private set; }
+
+    [field: SerializeField] public Weapon Weapon { get; private set; }
+
+
+    void Awake()
     {
-        
+        AnimationData.Initialize();
+        Animator = GetComponent<Animator>();
+        health = GetComponent<Health>();
+        Controller = GetComponent<CharacterController>();
+        stateMachine = new PlayerStateMachine(this);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        stateMachine.ChangeState(stateMachine.IdleState);
+        health.OnDie += OnDie;
+    }
+    private void Update()
+    {
+        stateMachine.HandleInput();
+        stateMachine.Update();
+    }
+    private void FixedUpdate()
+    {
+        stateMachine.PhysicUpdate();
+    }
+    void OnDie()
+    {
+        Animator.SetTrigger("Die");
+        enabled = false;
     }
 }

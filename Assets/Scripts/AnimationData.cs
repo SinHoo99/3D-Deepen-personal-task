@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class AnimationData
 {
     [SerializeField] private string groundParameterName = "@Ground";
@@ -23,6 +24,7 @@ public class AnimationData
         IdleParameterHash = Animator.StringToHash(idleParameterName);
         WalkParameterHash = Animator.StringToHash(walkParameterName);
         RunParameterHash = Animator.StringToHash(runParameterName);
-        Animator.StringToHash(attackParameterName);
+        AttackParameterHash = Animator.StringToHash(attackParameterName);
+        BaseAttackParameterName = Animator.StringToHash(baseAttackParameterName);
     }
 }
