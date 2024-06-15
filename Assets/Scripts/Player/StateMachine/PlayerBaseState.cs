@@ -114,6 +114,7 @@ public class PlayerBaseState : IState
         return enemyDistanceSqr <= stateMachine.Player.Data.PlayerChasingRange * stateMachine.Player.Data.PlayerChasingRange;
     }
 
+
     protected virtual void UpdateTarget()
     {
         // 기본 클래스에서는 추적과 관련된 로직이 없으므로 구현하지 않음.

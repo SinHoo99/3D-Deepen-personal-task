@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     void Awake()
     {
         AnimationData.Initialize();
-        Animator = GetComponent<Animator>();
+        Animator = GetComponentInChildren<Animator>();
         health = GetComponent<Health>();
         Controller = GetComponent<CharacterController>();
         stateMachine = new PlayerStateMachine(this);
@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        stateMachine.ChangeState(stateMachine.IdleState);
+        stateMachine.ChangeState(stateMachine.ChasingState);
         health.OnDie += OnDie;
     }
     private void Update()
@@ -44,4 +44,6 @@ public class Player : MonoBehaviour
         Animator.SetTrigger("Die");
         enabled = false;
     }
+
+
 }

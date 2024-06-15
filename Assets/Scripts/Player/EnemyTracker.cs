@@ -22,7 +22,7 @@ public class EnemyTracker : MonoBehaviour
     }
 
     // 추적할 적들을 업데이트하는 메서드
-    private void UpdateTrackedEnemies()
+    public void UpdateTrackedEnemies()
     {
         trackedEnemies.Clear();
         Enemy[] allEnemies = GameObject.FindObjectsOfType<Enemy>();

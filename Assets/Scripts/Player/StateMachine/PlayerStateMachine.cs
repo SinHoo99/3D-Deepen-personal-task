@@ -11,8 +11,9 @@ public class PlayerStateMachine : StateMachine
     public float MovementSpeedModifier { get; set; } = 1f;
     public Transform MainCamTransform { get; set; }
     public Health Target { get; set; }
-    public PlayerIdleState IdleState { get; }
     public bool IsAttacking { get; set; }
+
+    public EnemyTracker EnemyTracker { get; private set; }
     public PlayerChasingState ChasingState { get; }
     public PlayerAttackState AttackState { get; }
 
@@ -20,14 +21,19 @@ public class PlayerStateMachine : StateMachine
     {
         this.Player = player;
         Target = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Health>();
+        EnemyTracker = GameObject.FindObjectOfType<EnemyTracker>();
 
         this.Player = player;
         MainCamTransform = Camera.main.transform;
 
-        IdleState = new PlayerIdleState(this);
         ChasingState = new PlayerChasingState(this);
+        AttackState = new PlayerAttackState(this); // 추가: AttackState 설정
 
         MovementSpeed = player.Data.GroundData.BaseSpeed;
         RotationDamping = player.Data.GroundData.BaseRotaionDamping;
+    }
+    public string GetCurrentStateName()
+    {
+        return currentState != null ? currentState.GetType().Name : "None";
     }
 }
