@@ -12,6 +12,7 @@ public class PlayerBaseState : IState
         this.stateMachine = stateMachine;
         groundData = stateMachine.Player.Data.GroundData;
     }
+
     public virtual void Enter()
     {
 
@@ -21,6 +22,7 @@ public class PlayerBaseState : IState
     {
 
     }
+
     public void HandleInput()
     {
 
@@ -35,6 +37,7 @@ public class PlayerBaseState : IState
     {
         Move();
     }
+
     protected void StartAnimation(int animatorHash)
     {
         stateMachine.Player.Animator.SetBool(animatorHash, true);
@@ -44,28 +47,24 @@ public class PlayerBaseState : IState
     {
         stateMachine.Player.Animator.SetBool(animatorHash, false);
     }
+
     private void Move()
     {
-        Vector3 movementDircetion = GetMovementDirection();
-
-        Move(movementDircetion);
-
-        Rotate(movementDircetion);
+        Vector3 movementDirection = GetMovementDirection();
+        Move(movementDirection);
+        Rotate(movementDirection);
     }
 
     private Vector3 GetMovementDirection()
     {
         Vector3 dir = (stateMachine.Target.transform.position - stateMachine.Player.transform.position);
-
-
-
         return dir;
     }
 
     private void Move(Vector3 direction)
     {
         float movementSpeed = GetMovementSpeed();
-        stateMachine.Player.Controller.Move(((direction * movementSpeed)) * Time.deltaTime);
+        stateMachine.Player.Controller.Move((direction * movementSpeed) * Time.deltaTime);
     }
 
     private float GetMovementSpeed()
@@ -84,7 +83,7 @@ public class PlayerBaseState : IState
         }
     }
 
-    protected float GetNomalizedTime(Animator animator, string tag)
+    protected float GetNormalizedTime(Animator animator, string tag)
     {
         AnimatorStateInfo currentInfo = animator.GetCurrentAnimatorStateInfo(0);
         AnimatorStateInfo nextInfo = animator.GetNextAnimatorStateInfo(0);
@@ -101,13 +100,22 @@ public class PlayerBaseState : IState
         {
             return 0f;
         }
-
     }
-    protected bool IsinChsingRange()
+
+    protected bool IsInChasingRange()
     {
-        if (stateMachine.Target.IsDie) return false;
+        if (stateMachine.Target == null || stateMachine.Target.IsDie)
+        {
+            UpdateTarget(); // 다른 적을 재추적
+            return false;   // 현재는 추적 범위에 없음
+        }
 
         float enemyDistanceSqr = (stateMachine.Target.transform.position - stateMachine.Player.transform.position).sqrMagnitude;
         return enemyDistanceSqr <= stateMachine.Player.Data.PlayerChasingRange * stateMachine.Player.Data.PlayerChasingRange;
+    }
+
+    protected virtual void UpdateTarget()
+    {
+        // 기본 클래스에서는 추적과 관련된 로직이 없으므로 구현하지 않음.
     }
 }

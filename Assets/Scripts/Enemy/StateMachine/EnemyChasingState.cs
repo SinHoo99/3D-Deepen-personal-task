@@ -30,14 +30,14 @@ public class EnemyChasingState : EnemyBaseState
             stateMachine.ChangeState(stateMachine.IdleState);
             return;
         }
-        else if (IsinAttackRange())
+        else if (IsInAttackRange())
         {
             stateMachine.ChangeState(stateMachine.AttackState);
             return;
         }
 
     }
-    protected bool IsinAttackRange()
+    protected bool IsInAttackRange()
     {
         float playerDistanceSqr = (stateMachine.Target.transform.position - stateMachine.Enemy.transform.position).sqrMagnitude;
         return playerDistanceSqr <= stateMachine.Enemy.Data.AttackRange * stateMachine.Enemy.Data.AttackRange;

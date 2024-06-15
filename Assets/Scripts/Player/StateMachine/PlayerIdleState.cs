@@ -28,7 +28,7 @@ public class PlayerIdleState : PlayerBaseState
     {
         base.Update();
 
-        if (IsinChsingRange())
+        if (IsInChasingRange())
         {
             stateMachine.ChangeState(stateMachine.ChasingState);
             return;

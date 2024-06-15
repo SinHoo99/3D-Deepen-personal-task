@@ -10,7 +10,7 @@ public class EnemyStateMachine : StateMachine
     public float RotationDamping { get; private set; }
     public float MovementSpeedModifier { get; set; } = 1f;
 
-    public Health Target { get; private set; }
+    public Health Target { get;  set; }
     public EnemyIdleState IdleState { get; }
     public EnemyChasingState ChasingState { get; }
     public EnemyAttackState AttackState { get; }

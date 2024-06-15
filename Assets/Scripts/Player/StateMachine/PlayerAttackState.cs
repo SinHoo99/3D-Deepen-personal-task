@@ -32,7 +32,7 @@ public class PlayerAttackState : PlayerBaseState
         base.Update();
 
 
-        float normalizedTime = GetNomalizedTime(stateMachine.Player.Animator, "Attack");
+        float normalizedTime = GetNormalizedTime(stateMachine.Player.Animator, "Attack");
         if (normalizedTime < 1f)
         {
 
@@ -50,7 +50,7 @@ public class PlayerAttackState : PlayerBaseState
         }
         else
         {
-            if (IsinChsingRange())
+            if (IsInChasingRange())
             {
                 stateMachine.ChangeState(stateMachine.ChasingState);
                 return;

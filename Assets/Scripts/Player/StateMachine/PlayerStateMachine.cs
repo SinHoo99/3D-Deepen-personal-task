@@ -10,7 +10,7 @@ public class PlayerStateMachine : StateMachine
     public float RotationDamping { get; private set; }
     public float MovementSpeedModifier { get; set; } = 1f;
     public Transform MainCamTransform { get; set; }
-    public Health Target { get; private set; }
+    public Health Target { get; set; }
     public PlayerIdleState IdleState { get; }
     public bool IsAttacking { get; set; }
     public PlayerChasingState ChasingState { get; }
