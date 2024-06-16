@@ -57,14 +57,33 @@ public class PlayerBaseState : IState
 
     private Vector3 GetMovementDirection()
     {
-        Vector3 dir = (stateMachine.Target.transform.position - stateMachine.Player.transform.position);
+        Vector3 dir = stateMachine.Target.transform.position - stateMachine.Player.transform.position;
+
+        // y축 이동을 막기 위해 y 값을 0으로 설정
+        dir.y = 0;
+
+        // direction 벡터를 정규화
+        dir.Normalize();
+
         return dir;
     }
 
     private void Move(Vector3 direction)
     {
         float movementSpeed = GetMovementSpeed();
-        stateMachine.Player.Controller.Move((direction * movementSpeed) * Time.deltaTime);
+
+        // 현재 위치에서 y 값을 고정
+        Vector3 currentPosition = stateMachine.Player.transform.position;
+
+        // 이동할 위치 계산
+        Vector3 move = (direction * movementSpeed) * Time.deltaTime;
+
+        // 최종적으로 y 좌표를 현재 위치의 y 값으로 설정
+        Vector3 finalPosition = currentPosition + move;
+        finalPosition.y = currentPosition.y; // y 좌표 고정
+
+        // 이동할 양만큼 Controller를 이동시킴
+        stateMachine.Player.Controller.Move(move);
     }
 
     private float GetMovementSpeed()
@@ -77,8 +96,18 @@ public class PlayerBaseState : IState
     {
         if (direction != Vector3.zero)
         {
+            // y축 회전을 막기 위해 y 값을 0으로 설정
+            direction.y = 0;
+
+            // direction 벡터를 정규화
+            direction.Normalize();
+
             Transform playerTransform = stateMachine.Player.transform;
+
+            // targetRotation을 수정된 direction을 기반으로 생성
             Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+            // 플레이어를 targetRotation으로 회전
             playerTransform.rotation = Quaternion.Slerp(playerTransform.rotation, targetRotation, stateMachine.RotationDamping * Time.deltaTime);
         }
     }
@@ -113,7 +142,6 @@ public class PlayerBaseState : IState
         float enemyDistanceSqr = (stateMachine.Target.transform.position - stateMachine.Player.transform.position).sqrMagnitude;
         return enemyDistanceSqr <= stateMachine.Player.Data.PlayerChasingRange * stateMachine.Player.Data.PlayerChasingRange;
     }
-
 
     protected virtual void UpdateTarget()
     {

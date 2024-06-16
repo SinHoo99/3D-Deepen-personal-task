@@ -65,4 +65,17 @@ public class EnemyTracker : MonoBehaviour
     {
         return trackedEnemies;
     }
+
+    // 디버깅용: 추적 중인 적들을 로그로 출력하는 메서드
+    public void DebugTrackedEnemies()
+    {
+        Debug.Log($"추적 중인 적의 수: {trackedEnemies.Count}");
+        foreach (var enemy in trackedEnemies)
+        {
+            if (enemy != null)
+            {
+                Debug.Log($"적 이름: {enemy.gameObject.name}, 생존 여부: {!enemy.health.IsDie}");
+            }
+        }
+    }
 }

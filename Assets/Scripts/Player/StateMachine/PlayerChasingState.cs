@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerChasingState : PlayerBaseState
 {
     public PlayerChasingState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
-        // 기존 생성자 내용 유지
     }
 
     public override void Enter()
@@ -15,9 +12,12 @@ public class PlayerChasingState : PlayerBaseState
         stateMachine.MovementSpeedModifier = groundData.WalkSpeedModifier;
         StartAnimation(stateMachine.Player.AnimationData.GroundParameterHash);
         StartAnimation(stateMachine.Player.AnimationData.RunParameterHash);
-        UpdateTrackedEnemies(); // 처음에 추적할 적들을 업데이트
-        UpdateTarget(); // 가장 가까운 적을 찾아 Target으로 설정
+        UpdateTrackedEnemies();
+        UpdateTarget(); // 추적 대상 업데이트
+
+        stateMachine.EnemyTracker.DebugTrackedEnemies();
     }
+
     public override void Exit()
     {
         base.Exit();
@@ -29,33 +29,26 @@ public class PlayerChasingState : PlayerBaseState
     {
         base.Update();
 
-        // 현재 타겟이 null이거나 죽은 경우 다른 적을 재추적
         if (stateMachine.Target == null || stateMachine.Target.IsDie)
         {
-            UpdateTarget(); // 가장 가까운 적을 찾아 Target으로 설정
+            UpdateTarget(); // 추적 대상이 없거나 죽었으면 새로운 대상 찾기
         }
 
-        // 적이 공격 범위에 들어온 경우 Attack 상태로 전환
         if (IsInAttackRange())
         {
-            UpdateTarget(); // 공격 범위에 들어왔을 때도 재추적
-            stateMachine.ChangeState(stateMachine.AttackState);
-            return;
+            stateMachine.ChangeState(stateMachine.AttackState); // 공격 범위 내에 있으면 공격 상태로 전환
         }
-        else if(!IsInAttackRange()) 
+        else if (!IsInChasingRange())
         {
-            stateMachine.ChangeState(stateMachine.ChasingState);
-            return;
+            stateMachine.ChangeState(stateMachine.GroundState); // 추적 범위 밖에 있으면 기본 상태로 전환
         }
     }
 
-    // 추적할 적들을 업데이트하는 메서드
     private void UpdateTrackedEnemies()
     {
-        stateMachine.EnemyTracker.UpdateTrackedEnemies();
+        stateMachine.EnemyTracker.UpdateTrackedEnemies(); // 적 추적 업데이트
     }
 
-    // 가장 가까운 적을 업데이트하는 메서드
     protected override void UpdateTarget()
     {
         base.UpdateTarget();
@@ -76,8 +69,8 @@ public class PlayerChasingState : PlayerBaseState
             }
         }
 
-        // closestEnemy가 null이 아니면 closestEnemy의 health를 Target으로 설정합니다.
         stateMachine.Target = closestEnemy != null ? closestEnemy.health : null;
+
         if (stateMachine.Target != null)
         {
             Debug.Log($"현재 추적 중인 적: {stateMachine.Target.gameObject.name}");
@@ -88,7 +81,6 @@ public class PlayerChasingState : PlayerBaseState
         }
     }
 
-    // 공격 범위 체크
     public bool IsInAttackRange()
     {
         if (stateMachine.Target == null)
@@ -96,7 +88,5 @@ public class PlayerChasingState : PlayerBaseState
 
         float playerDistanceSqr = (stateMachine.Target.transform.position - stateMachine.Player.transform.position).sqrMagnitude;
         return playerDistanceSqr <= stateMachine.Player.Data.AttackRange * stateMachine.Player.Data.AttackRange;
-        
     }
-
 }

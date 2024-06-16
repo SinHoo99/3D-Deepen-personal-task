@@ -32,5 +32,6 @@ public class PlayerGroundState : PlayerBaseState
     public override void PhysicUpdate()
     {
         base.PhysicUpdate();
+
     }
 }

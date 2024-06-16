@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
     }
 
     private void Start()
-    {
+    {        
         stateMachine.ChangeState(stateMachine.IdleState);
         health.OnDie += OnDie;
     }
@@ -44,6 +44,6 @@ public class Enemy : MonoBehaviour
     void OnDie()
     {
         Animator.SetTrigger("Die");
-        enabled = false;
+        gameObject.SetActive(false);
     }
 }

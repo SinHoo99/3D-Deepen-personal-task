@@ -19,7 +19,7 @@ MonoBehaviour:
     <RunSpeedModifier>k__BackingField: 1
   <AttackData>k__BackingField:
     <AttackInfoDatas>k__BackingField: []
-  Damage: 1
+  Damage: 30
   <PlayerChasingRange>k__BackingField: 1000000
   <AttackRange>k__BackingField: 2
   <Dealing_Start_TransitionTime>k__BackingField: 0.25

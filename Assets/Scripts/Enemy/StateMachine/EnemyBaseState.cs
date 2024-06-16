@@ -77,8 +77,18 @@ public class EnemyBaseState : IState
     {
         if (direction != Vector3.zero)
         {
+            // y축 회전을 막기 위해 y 값을 0으로 설정
+            direction.y = 0;
+
+            // direction 벡터를 정규화
+            direction.Normalize();
+
             Transform playerTransform = stateMachine.Enemy.transform;
+
+            // targetRotation을 수정된 direction을 기반으로 생성
             Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+            // 플레이어를 targetRotation으로 회전
             playerTransform.rotation = Quaternion.Slerp(playerTransform.rotation, targetRotation, stateMachine.RotationDamping * Time.deltaTime);
         }
     }
