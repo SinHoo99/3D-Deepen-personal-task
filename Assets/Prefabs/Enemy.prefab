@@ -144,7 +144,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -285,6 +285,7 @@ GameObject:
   - component: {fileID: 6884993594313005390}
   - component: {fileID: 969312325839356278}
   - component: {fileID: 461947715606910165}
+  - component: {fileID: 6646884740333939948}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -330,6 +331,8 @@ MonoBehaviour:
     attackParameterName: '@Attack'
     baseAttackParameterName: BaseAttack
   <Weapon>k__BackingField: {fileID: 8049630235141152}
+  patrolRadius: 10
+  patrolTime: 5
 --- !u!95 &8456841239746241744
 Animator:
   serializedVersion: 5
@@ -363,7 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f727924b33a1e6d40b11489cd5505779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 5
   health: 0
   IsDie: 0
 --- !u!143 &969312325839356278
@@ -419,3 +422,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!195 &6646884740333939948
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8268281126280686932}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

@@ -37,7 +37,8 @@ public class PlayerAttackState : PlayerBaseState
         {
             if (!alreadyAppliedDealing && normalizedTime >= stateMachine.Player.Data.Dealing_Start_TransitionTime)
             {
-                stateMachine.Player.Weapon.SetAttack(stateMachine.Player.Data.Damage);
+                int randomDamage = Random.Range(-5, 5);
+                stateMachine.Player.Weapon.SetAttack(stateMachine.Player.Data.Damage + randomDamage);
                 stateMachine.Player.Weapon.gameObject.SetActive(true);
                 alreadyAppliedDealing = true;
             }

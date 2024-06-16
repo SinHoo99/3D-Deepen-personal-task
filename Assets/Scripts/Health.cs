@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Health : MonoBehaviour
@@ -15,6 +13,7 @@ public class Health : MonoBehaviour
     private void Start()
     {
         health = maxHealth;
+        IsDie = false; // 시작할 때 IsDie를 false로 초기화
     }
 
     public void TakeDamage(int damage)
@@ -30,5 +29,12 @@ public class Health : MonoBehaviour
         }
 
         Debug.Log(health);
+    }
+
+    public void Respawn()
+    { 
+        maxHealth = Mathf.RoundToInt(maxHealth * 1.1f);
+        health = maxHealth;
+        IsDie = false; // 다시 생성될 때 IsDie를 false로 설정
     }
 }

@@ -14,4 +14,6 @@ public class EnemySO : ScriptableObject
 
     [field: SerializeField][field: Range(0f, 1f)] public float Dealing_Start_TransitionTime { get; private set; }
     [field: SerializeField][field: Range(0f, 1f)] public float Dealing_End_TransitionTime { get; private set; }
+
+    [field: SerializeField] public int ExperiencePoints = 10; // 기본값을 10으로 설정
 }
