@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b81615cf99882314c986dc12f6dd4d4b, type: 3}
   m_Name: Enemy
   m_EditorClassIdentifier: 
-  <EnemyChasingRange>k__BackingField: 20
+  <EnemyChasingRange>k__BackingField: 10
   <AttackRange>k__BackingField: 1
   <GroundData>k__BackingField:
     <BaseSpeed>k__BackingField: 1
