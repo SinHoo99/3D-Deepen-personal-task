@@ -10,6 +10,21 @@ public class PlayerBaseState : IState
     public PlayerBaseState(PlayerStateMachine stateMachine)
     {
         this.stateMachine = stateMachine;
+
+        if (stateMachine.Player == null)
+        {
+            Debug.LogError("PlayerStateMachine의 Player가 null입니다.");
+        }
+        else if (stateMachine.Player.Data == null)
+        {
+            Debug.LogError("PlayerStateMachine의 Player.Data가 null입니다.");
+        }
+        else if (stateMachine.Player.Data.GroundData == null)
+        {
+            Debug.LogError("PlayerStateMachine의 Player.Data.GroundData가 null입니다.");
+        }
+
+        // 위에서 null 체크를 통과하면 groundData에 할당
         groundData = stateMachine.Player.Data.GroundData;
     }
 

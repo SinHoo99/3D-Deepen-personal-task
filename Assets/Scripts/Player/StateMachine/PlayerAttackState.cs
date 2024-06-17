@@ -32,6 +32,20 @@ public class PlayerAttackState : PlayerBaseState
     {
         base.Update();
 
+        // stateMachine.Player啊 null牢 版快 贸府
+        if (stateMachine.Player == null)
+        {
+            Debug.LogError("PlayerAttackState: stateMachine.Player is null.");
+            return;
+        }
+
+        // stateMachine.Player.Data啊 null牢 版快 贸府
+        if (stateMachine.Player.Data == null)
+        {
+            Debug.LogError("PlayerAttackState: stateMachine.Player.Data is null.");
+            return;
+        }
+
         float normalizedTime = GetNormalizedTime(stateMachine.Player.Animator, "Attack");
         if (normalizedTime < 1f)
         {
@@ -54,4 +68,5 @@ public class PlayerAttackState : PlayerBaseState
             stateMachine.ChangeState(stateMachine.ChasingState);
         }
     }
+
 }

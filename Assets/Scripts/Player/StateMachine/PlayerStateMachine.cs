@@ -20,22 +20,35 @@ public class PlayerStateMachine : StateMachine
 
     public PlayerStateMachine(Player player)
     {
+        if (player == null)
+        {
+            Debug.LogError("PlayerStateMachine: Player 객체가 null입니다.");
+            return;
+        }
+
         this.Player = player;
+
+        if (player.Data == null)
+        {
+            Debug.LogError("PlayerStateMachine: player.Data가 null입니다.");
+            return;
+        }
+
+        // 예시: Target 설정
         Target = GameObject.FindGameObjectWithTag("Enemy")?.GetComponent<Health>();
+        // 예시: EnemyTracker 초기화
         EnemyTracker = GameObject.FindObjectOfType<EnemyTracker>();
 
-        MainCamTransform = Camera.main.transform;
+        // 예시: 카메라 설정
+        MainCamTransform = Camera.main?.transform;
 
+        // 상태 초기화
         GroundState = new PlayerGroundState(this);
         ChasingState = new PlayerChasingState(this);
         AttackState = new PlayerAttackState(this);
 
+        // 예시: 움직임 속도 및 회전 감소 설정
         MovementSpeed = player.Data.GroundData.BaseSpeed;
         RotationDamping = player.Data.GroundData.BaseRotaionDamping;
-    }
-
-    public string GetCurrentStateName()
-    {
-        return currentState != null ? currentState.GetType().Name : "None";
     }
 }

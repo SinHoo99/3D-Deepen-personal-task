@@ -7,7 +7,6 @@ public class EnhanceUI : MonoBehaviour
     public TextMeshProUGUI CurrentAttackPower; // 현재 공격력 텍스트
     public TextMeshProUGUI EnhancementProbability; // 강화 확률 텍스트
     public TextMeshProUGUI EnhanceCostText; // 강화 비용 텍스트
-
     private float enhancementProbability = 0.99f; // 초기 강화 확률
     private float probabilityDecreaseRate = 0.05f; // 강화 성공 시 감소할 확률
     private int attackPowerDecrease = 2; // 강화 실패 시 감소할 공격력
@@ -76,7 +75,6 @@ public class EnhanceUI : MonoBehaviour
             }
 
             Debug.Log("강화 실패... 새로운 공격력: " + playerSO.Damage);
-            enhanceCount--;
         }
 
         DisplayStatus();

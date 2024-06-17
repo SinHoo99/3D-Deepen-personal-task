@@ -35,23 +35,32 @@ public class GameManager : MonoBehaviour
             Debug.LogError("ObjectPool 컴포넌트를 찾지 못했습니다.");
         }
 
-        // 플레이어 참조 가져오기
+        // 플레이어 GameObject에서 Player 컴포넌트를 찾아서 PlayerSO를 가져옴
         _player = player.GetComponent<Player>();
         if (_player == null)
         {
-            Debug.LogError("플레이어 컴포넌트를 찾지 못했습니다.");
+            Debug.LogError("플레이어(Player) 컴포넌트를 찾지 못했습니다.");
         }
         else
         {
-            _player.OnExperienceChanged += UpdateExpUI;
-            _player.OnLevelChanged += UpdateLevelUI;
-            _player.OnGoldChanged += UpdateGoldUI;
-        }
-        UpdateExpUI(_player.Experience); // 초기 UI 업데이트
-        UpdateLevelUI(_player.Level);    // 초기 UI 업데이트
-        UpdateGoldUI(_player.gold);
+            if (_player.Data != null)
+            {
+                _player.Data.OnExperienceChanged += UpdateExpUI;
+                _player.Data.OnLevelChanged += UpdateLevelUI;
+                _player.Data.OnGoldChanged += UpdateGoldUI;
+            }
+            else
+            {
+                Debug.LogError("PlayerSO reference is null in GameManager.");
+            }
 
+            // GameManager에서는 PlayerSO를 직접 사용하는 대신, Player 클래스의 Data 필드를 사용
+            UpdateExpUI(_player.Data?.Experience ?? 0);
+            UpdateLevelUI(_player.Data?.Level ?? 1);
+            UpdateGoldUI(_player.Data?.Gold ?? 0);
+        }
     }
+
 
     private void Start()
     {
@@ -113,18 +122,18 @@ public class GameManager : MonoBehaviour
         // 이벤트 구독 해제
         if (_player != null)
         {
-            _player.OnExperienceChanged -= UpdateExpUI;
-            _player.OnLevelChanged -= UpdateLevelUI;
-            _player.OnGoldChanged -= UpdateGoldUI;
+            _player.Data.OnExperienceChanged -= UpdateExpUI;
+            _player.Data.OnLevelChanged -= UpdateLevelUI;
+            _player.Data.OnGoldChanged -= UpdateGoldUI;
         }
     }
     private void UpdateExpUI(int experience)
     {
         if (_player != null && ExpGaugeSlider != null)
         {
-            ExpGaugeSlider.value = (float)_player.Experience / _player.ExperienceToNextLevel;
-            ExpText.text = $"{_player.Experience} / {_player.ExperienceToNextLevel}";
-            Debug.Log($"경험치 UI 업데이트: {_player.Experience}/{_player.ExperienceToNextLevel}");
+            ExpGaugeSlider.value = (float)_player.Data.Experience / _player.Data.ExperienceToNextLevel;
+            ExpText.text = $"{_player.Data.Experience} / {_player.Data.ExperienceToNextLevel}";
+            Debug.Log($"경험치 UI 업데이트: {_player.Data.Experience}/{_player.Data.ExperienceToNextLevel}");
         }
         else
         {

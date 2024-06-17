@@ -12,15 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8ae5a448daa424a89fcd702e538a71, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  <GroundData>k__BackingField:
+  damage: 5
+  gold: 0
+  level: 1
+  experience: 0
+  experienceToNextLevel: 100
+  playerChasingRange: 100000
+  attackRange: 2
+  dealing_Start_TransitionTime: 0.25
+  dealing_End_TransitionTime: 0.35
+  groundData:
     <BaseSpeed>k__BackingField: 5
     <BaseRotaionDamping>k__BackingField: 1
-    <WalkSpeedModifier>k__BackingField: 2
+    <WalkSpeedModifier>k__BackingField: 1
     <RunSpeedModifier>k__BackingField: 1
-  <AttackData>k__BackingField:
+  attackData:
     <AttackInfoDatas>k__BackingField: []
-  damage: 5
-  <PlayerChasingRange>k__BackingField: 1000000
-  <AttackRange>k__BackingField: 2
-  <Dealing_Start_TransitionTime>k__BackingField: 0.25
-  <Dealing_End_TransitionTime>k__BackingField: 0.35

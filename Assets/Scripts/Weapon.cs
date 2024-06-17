@@ -30,5 +30,10 @@ public class Weapon : MonoBehaviour
     public void SetAttack(int damage)
     {
         this.damage = damage;
+        if (damage < 0)
+        {
+            Debug.LogError("Weapon: Damage cannot be negative.");
+            return;
+        }
     }
 }

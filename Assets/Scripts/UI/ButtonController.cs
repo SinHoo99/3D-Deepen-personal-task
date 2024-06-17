@@ -4,7 +4,7 @@ public class ButtonController : MonoBehaviour
 {
     [SerializeField] private GameObject enhanceUIPanel; // 강화 UI 패널
     [SerializeField] private EnhanceUI enhanceUI; // EnhanceUI 스크립트 참조
-    [SerializeField] private Player player; // Player 클래스 참조
+    [SerializeField] private PlayerSO player; // PlayerSO 클래스 참조
 
     private bool isEnhanceUIVisible = false; // 강화 UI의 활성화 상태
 
@@ -28,14 +28,14 @@ public class ButtonController : MonoBehaviour
         int enhanceCost = enhanceUI.CalculateEnhanceCost();
 
         // 골드가 강화 비용보다 적으면 강화를 실행하지 않음
-        if (player.gold < enhanceCost)
+        if (player.Gold < enhanceCost)
         {
             Debug.Log("골드가 부족하여 강화를 할 수 없습니다.");
             return;
         }
 
         // 골드 차감
-        player.gold -= enhanceCost;
+        player.Gold -= enhanceCost;
 
         // 강화 시도
         if (enhanceUI != null)
