@@ -37,10 +37,26 @@ public class AttackInfoData
 [CreateAssetMenu(fileName = "Player", menuName = "Characters/Player")]
 public class PlayerSO : ScriptableObject
 {
+    public event Action OnDamageChanged;
     [field: SerializeField] public PlayerGroundData GroundData { get; private set; }
     [field: SerializeField] public PlayerAttackData AttackData { get; private set; }
 
-    [field: SerializeField] public int Damage;
+    [Header("Combat Data")]
+    [field: SerializeField] public int damage;
+    [SerializeField]
+    public int Damage
+    {
+        get => damage;
+        set
+        {
+            if (damage != value)
+            {
+                damage = value;
+                OnDamageChanged?.Invoke(); // Damage 변경 시 이벤트 호출
+            }
+        }
+    }
+
     [field: SerializeField] public float PlayerChasingRange { get; private set; }
     [field: SerializeField] public float AttackRange { get; private set; }
     [field: SerializeField][field: Range(0f, 1f)] public float Dealing_Start_TransitionTime { get; private set; }
